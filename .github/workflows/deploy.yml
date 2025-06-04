@@ -56,7 +56,6 @@ jobs:
       - name: Approval gate
         run: echo "Waiting for manual approval..."
 
-
   terraform-apply:
     name: Terraform Apply
     runs-on: ubuntu-latest
@@ -78,11 +77,12 @@ jobs:
             role-to-assume: arn:aws:iam::304707804854:role/GitHubActionsOIDCRole
             aws-region: us-east-1
 
-      - name: Download plan
-        uses: actions/download-artifact@v4
-        with:
-          name: tfplan
-          path: .
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Plan
+        id: terraform-plan
+        run: terraform plan -out=tfplan.out
 
       - name: Terraform Apply
         run: terraform apply tfplan.out
