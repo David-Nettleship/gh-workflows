@@ -3,6 +3,11 @@ name: Terraform Deployment
 on:
   workflow_call:
 
+permissions:
+  id-token: write
+  contents: read
+
+
 jobs:
   terraform-plan:
     name: Terraform Plan
@@ -20,16 +25,13 @@ jobs:
           terraform_version: 1.6.5
 
       - name: Configure AWS credentials via OIDC
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v4
         with:
             role-to-assume: arn:aws:iam::304707804854:role/GitHubActionsOIDCRole
             aws-region: us-east-1
 
       - name: Debug AWS credentials
-        run: |
-          echo "AWS Access Key ID: ${{ secrets.AWS_ACCESS_KEY_ID }}"
-          echo "AWS Region: us-east-1"
-          aws sts get-caller-identity
+        run: aws sts get-caller-identity
 
       - name: Terraform Init
         run: terraform init
@@ -69,7 +71,7 @@ jobs:
           terraform_version: 1.6.5
 
       - name: Configure AWS credentials via OIDC
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v4
         with:
             role-to-assume: arn:aws:iam::304707804854:role/GitHubActionsOIDCRole
             aws-region: us-east-1
