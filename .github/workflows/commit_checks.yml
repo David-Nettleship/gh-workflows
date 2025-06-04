@@ -1,10 +1,29 @@
-name: Terraform Format Check
+name: QA Commit Checks
 
 on: push
 
 jobs:
-  check:
+  tf-fmt-check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - run: terraform fmt -check
+
+  black-check:
+    name: Check Python formatting with Black
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install black
+        run: pip install black
+
+      - name: Run black check
+        run: black --check .
