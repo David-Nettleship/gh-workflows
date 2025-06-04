@@ -24,7 +24,13 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-west-2
+          aws-region: us-east-1
+
+      - name: Debug AWS credentials
+        run: |
+          echo "AWS Access Key ID: ${{ secrets.AWS_ACCESS_KEY_ID }}"
+          echo "AWS Region: us-east-1"
+          aws sts get-caller-identity
 
       - name: Terraform Init
         run: terraform init
