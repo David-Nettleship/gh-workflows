@@ -50,10 +50,12 @@ jobs:
     name: ⏸️ Wait for Manual Approval
     runs-on: ubuntu-latest
     needs: terraform-plan
-    if: ${{ needs.terraform-plan.result == 'success' }}
+    environment:
+        name: pro
     steps:
-      - name: Await approval
-        run: echo "Waiting for approval to apply Terraform changes."
+      - name: Approval gate
+        run: echo "Waiting for manual approval..."
+
 
   terraform-apply:
     name: Terraform Apply
