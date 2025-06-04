@@ -19,12 +19,11 @@ jobs:
         with:
           terraform_version: 1.6.5
 
-      - name: Configure AWS credentials
+      - name: Configure AWS credentials via OIDC
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
+            role-to-assume: arn:aws:iam::304707804854:role/GitHubActionsOIDCRole
+            aws-region: us-east-1
 
       - name: Debug AWS credentials
         run: |
@@ -69,12 +68,11 @@ jobs:
         with:
           terraform_version: 1.6.5
 
-      - name: Configure AWS credentials
+      - name: Configure AWS credentials via OIDC
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
+            role-to-assume: arn:aws:iam::304707804854:role/GitHubActionsOIDCRole
+            aws-region: us-east-1
 
       - name: Download plan
         uses: actions/download-artifact@v4
